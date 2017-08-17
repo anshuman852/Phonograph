@@ -13,10 +13,6 @@ import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
-import com.crashlytics.android.answers.AddToCartEvent;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
-import com.crashlytics.android.answers.PurchaseEvent;
 import com.kabouzeid.appthemehelper.color.MaterialColor;
 import com.kabouzeid.gramophone.App;
 import com.kabouzeid.gramophone.BuildConfig;
@@ -74,22 +70,10 @@ public class PurchaseActivity extends AbsBaseActivity implements BillingProcesso
         purchaseButton.setOnClickListener(v -> {
             billingProcessor.purchase(PurchaseActivity.this, App.PRO_VERSION_PRODUCT_ID);
 
-            if (!BuildConfig.DEBUG) {
-                Answers.getInstance().logAddToCart(new AddToCartEvent()
-                        .putCurrency(Currency.getInstance("EUR"))
-                        .putItemId("pro_version")
-                        .putItemName("Phonograph Pro")
-                        .putItemPrice(BigDecimal.valueOf(3)));
-            }
         });
 
         billingProcessor = new BillingProcessor(this, App.GOOGLE_PLAY_LICENSE_KEY, this);
 
-        if (!BuildConfig.DEBUG) {
-            Answers.getInstance().logContentView(new ContentViewEvent()
-                    .putContentName("Purchase Activity")
-                    .putContentId("1"));
-        }
     }
 
     private void restorePurchase() {
@@ -104,14 +88,6 @@ public class PurchaseActivity extends AbsBaseActivity implements BillingProcesso
         Toast.makeText(this, R.string.thank_you, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
 
-        if (!BuildConfig.DEBUG) {
-            Answers.getInstance().logPurchase(new PurchaseEvent()
-                    .putCurrency(Currency.getInstance("EUR"))
-                    .putItemPrice(BigDecimal.valueOf(3))
-                    .putItemId("pro_version")
-                    .putSuccess(true)
-                    .putItemName("Phonograph Pro"));
-        }
     }
 
     @Override
