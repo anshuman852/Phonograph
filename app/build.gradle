@@ -52,7 +52,7 @@ android {
 
         applicationId 'com.kabouzeid.gramophone'
         versionCode 149
-        versionName '0.16 Mod'
+        versionName '1.0 Mod'
     }
     buildTypes {
         release {
